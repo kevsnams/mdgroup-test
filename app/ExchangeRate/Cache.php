@@ -2,6 +2,13 @@
 
 namespace App\ExchangeRate;
 
+/**
+ * Your code should use SQL to manipulate the MySQL
+ * database directly: specifically, do not use a
+ * framework's (e.g. Laravel's) caching system etc.
+ *
+ * Okay, using `DB`
+ */
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -73,9 +80,9 @@ class Cache {
          * Determine if it needs to apply inverse by checking if $from is not the same with `currency_from`
          */
         if ($from != $result['currency_from']) {
-            $normalizedResult['currency_from'] = $result['currency_to'];
-            $normalizedResult['currency_to'] = $result['currency_from'];
-            $normalizedResult['rate'] = 1 / $result['rate'];
+            $normalizedResult['currency_from']  = $result['currency_to'];
+            $normalizedResult['currency_to']    = $result['currency_from'];
+            $normalizedResult['rate']           = 1 / $result['rate'];
         }
 
 
@@ -87,7 +94,7 @@ class Cache {
         $result = $this->createNormalizedResult([
             'currency_from' => $from,
             'currency_to'   => $to,
-            'rate' => $rate,
+            'rate'          => $rate,
             'expires_at'    => date('Y-m-d H:i:s', strtotime('+'. $this->expire .' sec'))
         ]);
 
